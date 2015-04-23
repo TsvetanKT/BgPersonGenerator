@@ -4,9 +4,9 @@ Generator of random people.
 
 
 ### Example:
-'var peopleGenerator = new BgPersonGenerator(convertToEnglish: true, minAge: 0, maxAge:100, unique: false);'
-'List<BgPerson> people = peopleGenerator.GenerateRandomPeople(50);'
-'// Generates List of 50 BgPersons'
+*	'var peopleGenerator = new BgPersonGenerator(convertToEnglish: true, minAge: 0, maxAge:100, unique: false);'
+*	'List<BgPerson> people = peopleGenerator.GenerateRandomPeople(50);'
+*	'// Generates List of 50 BgPersons'
 
 ### BgPersonGenerator Properties
 *	'convertToEnglish'(bool) - Convert from cyrillic to latin alphabets.
