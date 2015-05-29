@@ -216,7 +216,7 @@
         {
             DateTime newDate = DateTime.Now.Date;
             newDate = newDate.AddYears((beforeYears + 1) * (-1));
-            newDate = newDate.AddDays(ran.Next(0, 365));
+            newDate = newDate.AddDays(ran.Next(1, 365));
 
             return newDate;
         }
