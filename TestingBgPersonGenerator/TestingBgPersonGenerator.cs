@@ -2,18 +2,19 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Text;
 
     using BgPersonGeneratorSpace;
-    using System.Diagnostics;
 
     public class TestingBgPersonGenerator
     {
         public static void Main(string[] args)
         {
-            int numberOfPeople = 1000;
+            // In this file will be the answer of this testing program.
             string filePath = @"../../out.txt";
+            int numberOfPeople = 1000;
 
             var peopleGenerator = new BgPersonGenerator(convertToEnglish: true, minAge: 5, maxAge: 5, unique: false);
             Stopwatch stopwatch = new Stopwatch();
