@@ -6,19 +6,21 @@
     using System.Text;
 
     using BgPersonGeneratorSpace;
+    using System.Diagnostics;
 
     public class TestingBgPersonGenerator
     {
         public static void Main(string[] args)
         {
-            int numberOfPeople = 50;
-            string filePath = @"out.txt";
+            int numberOfPeople = 1000;
+            string filePath = @"../../out.txt";
 
-            var peopleGenerator = new BgPersonGenerator(convertToEnglish: true, minAge: 0, maxAge:100, unique: false);          
-            var start = DateTime.Now;
+            var peopleGenerator = new BgPersonGenerator(convertToEnglish: true, minAge: 5, maxAge: 5, unique: false);
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             List<BgPerson> people = peopleGenerator.GenerateRandomPeople(numberOfPeople);
+            stopwatch.Stop();
 
-            var stop = DateTime.Now;
             var sb = new StringBuilder();
             int number = 0;
             foreach (var p in people)
@@ -39,9 +41,9 @@
 
             using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
             {
-                //Console.SetOut(writer);
+                Console.SetOut(writer);
                 Console.WriteLine(sb.ToString());
-                Console.WriteLine("{0} people generated in {1} milliseconds", numberOfPeople, (stop - start).TotalMilliseconds);
+                Console.WriteLine("{0} people generated in {1} milliseconds", numberOfPeople,  stopwatch.Elapsed.TotalMilliseconds);
             }
         }
     }

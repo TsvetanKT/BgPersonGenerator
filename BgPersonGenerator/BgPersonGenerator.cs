@@ -126,7 +126,7 @@
 
         public List<BgPerson> GenerateRandomPeople(int numberOfPeople)
         {
-            var returnList = new List<BgPerson>();
+            var returnList = new List<BgPerson>(numberOfPeople);
             if (this.Unique)
             {
                 var uniquePhones = new HashSet<string>();
@@ -177,13 +177,9 @@
 
         private static BgPerson BuildRandomPerson(bool convertToEnglish, bool isMale, string[] firstNames, string[] middleNames, string[] lastNames, int minAge, int maxAge, int populationInCities, City[] cities, int[] cityIndexes, Random ran)
         {
-            string firstName;
-            string middleName;
-            string lastName;
-
-            firstName = GetRandomElementFromArray(firstNames, ran);
-            middleName = TransmutRandomiddleName(ran, isMale, middleNames);
-            lastName = TransmutRandomiddleName(ran, isMale, lastNames);
+            string firstName = GetRandomElementFromArray(firstNames, ran);
+            string middleName = TransmutRandomiddleName(ran, isMale, middleNames);
+            string lastName = TransmutRandomiddleName(ran, isMale, lastNames);
 
             string city = GetRandomCity(cities, cityIndexes, populationInCities, ran);
             if (convertToEnglish)
@@ -194,7 +190,7 @@
                 city = TranslateToEnglish(city);
             }
 
-            DateTime birthDay = GetRandomDate(ran.Next(minAge, maxAge), ran);
+            DateTime birthDay = GetRandomDate(ran.Next(minAge, maxAge + 1), ran);
 
             string phone = GetRandomPhoneNumber(phoneCodes, ran);
 
@@ -219,7 +215,7 @@
         private static DateTime GetRandomDate(int beforeYears, Random ran)
         {
             DateTime newDate = DateTime.Now.Date;
-            newDate = newDate.AddYears(beforeYears * (-1));
+            newDate = newDate.AddYears((beforeYears + 1) * (-1));
             newDate = newDate.AddDays(ran.Next(0, 365));
 
             return newDate;
