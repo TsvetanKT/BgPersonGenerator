@@ -10,13 +10,13 @@
 
     public class TestingBgPersonGenerator
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             // In this file will be the answer of this testing program.
-            string filePath = @"../../out.txt";
-            int numberOfPeople = 1000;
+            string filePath = @"../../example.txt";
+            int numberOfPeople = 100;
 
-            var peopleGenerator = new BgPersonGenerator(convertToEnglish: true, minAge: 5, maxAge: 5, unique: false);
+            var peopleGenerator = new BgPersonGenerator(convertToEnglish: false, minAge: 1, maxAge: 100, unique: false);
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             List<BgPerson> people = peopleGenerator.GenerateRandomPeople(numberOfPeople);
