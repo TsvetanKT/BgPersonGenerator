@@ -16,7 +16,12 @@
             string filePath = @"../../example.txt";
             int numberOfPeople = 100;
 
-            var peopleGenerator = new BgPersonGenerator(convertToEnglish: false, minAge: 1, maxAge: 100, unique: false);
+            var peopleGenerator = new BgPersonGenerator(
+                convertToEnglish: false, 
+                minAge: 1, 
+                maxAge: 100, 
+                unique: false);
+
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             List<BgPerson> people = peopleGenerator.GenerateRandomPeople(numberOfPeople);
@@ -27,7 +32,7 @@
             foreach (var p in people)
             {
                 sb.AppendLine(string.Format(
-                    "{0}. {1} {2} {3} -{4} /Age: {5} /Birthday: {6} /Phone: {7} /From: {8} /EGN:{9}",
+                    "{0}. {1} {2} {3} - {4} |Age: {5} |Birthday: {6} |Phone: {7} |From: {8} |EGN:{9}",
                     ++number,
                     p.FirstName,
                     p.MiddleName,
@@ -44,7 +49,10 @@
             {
                 Console.SetOut(writer);
                 Console.WriteLine(sb.ToString());
-                Console.WriteLine("{0} people generated in {1} milliseconds", numberOfPeople,  stopwatch.Elapsed.TotalMilliseconds);
+                Console.WriteLine(
+                    "{0} people generated in {1} milliseconds", 
+                    numberOfPeople,  
+                    stopwatch.Elapsed.TotalMilliseconds);
             }
         }
     }

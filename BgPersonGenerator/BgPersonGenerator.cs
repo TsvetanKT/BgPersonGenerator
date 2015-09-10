@@ -7,7 +7,7 @@
     public class BgPersonGenerator
     {
         #region Fields
-        // TODO: Add more names and separated family name array
+        // TODO: Add more names and separated family names array
         private static string[] listOfMaleNames = new string[]
             { 
                 "Алекс", "Александър", "Ангел", "Атанас", "Божидар", "Борис", "Боян", "Валентин", "Васил", 
@@ -104,8 +104,16 @@
         private int populationInCities;
 
         private int[] cityIndexer;
+
+        private int minAge;
+
+        private int maxAge = 100;
     
-        public BgPersonGenerator(bool convertToEnglish = false, int minAge = 0, int maxAge = 100, bool unique = false)
+        public BgPersonGenerator(
+            bool convertToEnglish = false, 
+            int minAge = 0,
+            int maxAge = 100, 
+            bool unique = false)
         {
             this.ConvertToEnglish = convertToEnglish;
             this.MinAge = minAge;
@@ -118,9 +126,44 @@
 
         public bool ConvertToEnglish { get; set; }
 
-        public int MinAge { get; set; }
+        public int MinAge 
+        { 
+            get
+            {
+                return this.minAge;
+            }
 
-        public int MaxAge { get; set; }
+            set
+            {
+                if (value < 0 || value > this.MaxAge)
+                {
+                    Console.WriteLine(value + " " + this.MaxAge);
+                    throw new ArgumentException(
+                        "MinAge mist be greater or equal to 0 and less than MaxAge");
+                }
+
+                this.minAge = value;
+            }
+        }
+
+        public int MaxAge
+        {
+            get
+            {
+                return this.maxAge;
+            }
+
+            set
+            {
+                if (value < 0 || value < this.MinAge)
+                {
+                    throw new ArgumentException(
+                        "MaxAge mist be greater or equal to MinAge and 0");
+                }
+
+                this.maxAge = value;
+            }
+        }
 
         public bool Unique { get; set; }
 
@@ -140,7 +183,9 @@
                     currentPerson = this.GetRandomPerson();
                     uniqueEGNs.Add(currentPerson.EGN);
                     uniquePhones.Add(currentPerson.PhoneNumber);
-                    if ((uniqueEGNs.Count > oldEGNCount) && (uniquePhones.Count > oldPhonesCount))
+
+                    if ((uniqueEGNs.Count > oldEGNCount) && 
+                        (uniquePhones.Count > oldPhonesCount))
                     {
                         returnList.Add(currentPerson);
                         oldEGNCount++;
@@ -169,13 +214,46 @@
 
             if (gender == 1)
             {
-                return BuildRandomPerson(this.ConvertToEnglish, true, listOfMaleNames, listOfMaleNames, listOfMaleNames, this.MinAge, this.MaxAge, this.populationInCities, cities, this.cityIndexer, this.ran);
+                return BuildRandomPerson(
+                    this.ConvertToEnglish, 
+                    true, 
+                    listOfMaleNames, 
+                    listOfMaleNames, 
+                    listOfMaleNames, 
+                    this.MinAge, 
+                    this.MaxAge, 
+                    this.populationInCities, 
+                    cities, 
+                    this.cityIndexer, 
+                    this.ran);
             }
 
-            return BuildRandomPerson(this.ConvertToEnglish, false, listOfFemaleNames, listOfMaleNames, listOfMaleNames, this.MinAge, this.MaxAge, this.populationInCities, cities, this.cityIndexer, this.ran);
+            return BuildRandomPerson(
+                this.ConvertToEnglish, 
+                false, 
+                listOfFemaleNames, 
+                listOfMaleNames, 
+                listOfMaleNames, 
+                this.MinAge, 
+                this.MaxAge, 
+                this.populationInCities, 
+                cities, 
+                this.cityIndexer, 
+                this.ran);
         }
 
-        private static BgPerson BuildRandomPerson(bool convertToEnglish, bool isMale, string[] firstNames, string[] middleNames, string[] lastNames, int minAge, int maxAge, int populationInCities, City[] cities, int[] cityIndexes, Random ran)
+        private static BgPerson BuildRandomPerson(
+            bool convertToEnglish, 
+            bool isMale, 
+            string[] firstNames, 
+            string[] middleNames, 
+            string[] lastNames, 
+            int minAge, 
+            int maxAge, 
+            int populationInCities, 
+            City[] cities, 
+            int[] cityIndexes, 
+            Random ran)
         {
             string firstName = GetRandomElementFromArray(firstNames, ran);
             string middleName = TransmutRandomiddleName(ran, isMale, middleNames);
@@ -196,7 +274,15 @@
 
             string egn = EGN(birthDay, isMale, ran);
 
-            return new BgPerson(firstName, middleName, lastName, isMale, birthDay, city, phone, egn);
+            return new BgPerson(
+                firstName, 
+                middleName, 
+                lastName, 
+                isMale, 
+                birthDay, 
+                city, 
+                phone, 
+                egn);
         }
 
         private static int[] GenerateCityIndexer(City[] cities)
@@ -232,7 +318,11 @@
             return population;
         }
 
-        private static string GetRandomCity(City[] cities, int[] indexers, int populationInCities, Random ran)
+        private static string GetRandomCity(
+            City[] cities, 
+            int[] indexers, 
+            int populationInCities, 
+            Random ran)
         {
             int randomNumber = ran.Next(0, populationInCities);
             int cityIndex = Array.BinarySearch(indexers, randomNumber);
@@ -262,12 +352,15 @@
             {
                 currentName = currentName.Substring(0, currentName.Length - 1) + "ев";
             }
-            else if (currentName[currentName.Length - 2] == 'ъ' && currentName[currentName.Length - 1] == 'р')
+            else if (currentName[currentName.Length - 2] == 'ъ' && 
+                currentName[currentName.Length - 1] == 'р')
             {
                 // Петър
                 currentName = currentName.Substring(0, currentName.Length - 2) + "ов";
             }
-            else if (currentName[currentName.Length - 3] == 'с' && currentName[currentName.Length - 2] == 'и' && currentName[currentName.Length - 1] == 'л')
+            else if (currentName[currentName.Length - 3] == 'с' && 
+                currentName[currentName.Length - 2] == 'и' && 
+                currentName[currentName.Length - 1] == 'л')
             {
                 // Васил
                 currentName += "ев";
@@ -300,7 +393,10 @@
         {
             var sb = new StringBuilder();
             sb.Append(GetRandomElementFromArray(codes, ran));
-            sb.Append(((long)ran.Next(0, 1000) * (long)ran.Next(0, 10000)).ToString().PadLeft(7, '0'));
+            sb.Append(((long)ran.Next(0, 1000) * 
+                (long)ran.Next(0, 10000))
+                .ToString()
+                .PadLeft(7, '0'));
             return sb.ToString();
         }
 
@@ -323,9 +419,9 @@
             return sb.ToString();
         }
 
-        // http://bg.wikipedia.org/wiki/%D0%95%D0%B4%D0%B8%D0%BD%D0%B5%D0%BD_%D0%B3%D1%80%D0%B0%D0%B6%D0%B4%D0%B0%D0%BD%D1%81%D0%BA%D0%B8_%D0%BD%D0%BE%D0%BC%D0%B5%D1%80
         private static string EGN(DateTime birthDate, bool isMale, Random ran)
         {
+            // http://bg.wikipedia.org/wiki/%D0%95%D0%B4%D0%B8%D0%BD%D0%B5%D0%BD_%D0%B3%D1%80%D0%B0%D0%B6%D0%B4%D0%B0%D0%BD%D1%81%D0%BA%D0%B8_%D0%BD%D0%BE%D0%BC%D0%B5%D1%80
             var egn = new int[10];
             egn[0] = int.Parse(birthDate.Year.ToString().Substring(2, 1));
             egn[1] = int.Parse(birthDate.Year.ToString().Substring(3, 1));
@@ -350,9 +446,11 @@
                 egn[7] = ran.Next(0, 10);
                 egn[8] = ran.Next(0, 10);
 
-                if ((isMale == true && egn[8] % 2 == 0) || (isMale == false && egn[8] % 2 == 1))
+                if ((isMale == true && egn[8] % 2 == 0) || 
+                    (isMale == false && egn[8] % 2 == 1))
                 {
-                    if (((egn[6] != egn[7]) || (egn[6] == egn[7])) && ((egn[6] != 0) || (egn[6] != 8)))
+                    if (((egn[6] != egn[7]) || (egn[6] == egn[7])) && 
+                        ((egn[6] != 0) || (egn[6] != 8)))
                     {
                         break;
                     }
