@@ -6,8 +6,9 @@ C# Library(.dll) - Generator of random people.
 ### Example:
 *	`using BgPersonGeneratorSpace;`
 *	`var peopleGenerator = new BgPersonGenerator(convertToEnglish: true, minAge: 0, maxAge: 100, unique: false);`
-*	`List<BgPerson> people = peopleGenerator.GenerateRandomPeople(50);`
-*	`// Generates List of 50 BgPersons`
+*	`List<BgPerson> people = peopleGenerator.GenerateRandomPeople(100);`
+*	`// Generates List of 100 BgPersons`
+*	`// See [Example output](https://github.com/TsvetanKT/BgPersonGenerator/blob/master/TestingBgPersonGenerator/example.txt)`
 
 ### BgPersonGenerator Properties
 *	`convertToEnglish`(bool) - Converts from cyrillic to latin alphabets.
