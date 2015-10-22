@@ -109,6 +109,13 @@
 
         private int maxAge = 100;
     
+        /// <summary>
+        /// Initializes a new instance of the BgPersonGenerator class.
+        /// </summary>
+        /// <param name="convertToEnglish">Convert to Latin alphabet or stay with Cyrillic.</param>
+        /// <param name="minAge">Minimal age in years.</param>
+        /// <param name="maxAge">Maximal age in years.</param>
+        /// <param name="unique">Ensure uniqueness of Phone number and EGN in the generated list.</param>
         public BgPersonGenerator(
             bool convertToEnglish = false, 
             int minAge = 0,
@@ -124,8 +131,14 @@
             this.Unique = unique;
         }
 
+        /// <summary>
+        /// Convert to Latin alphabet or stay with Cyrillic.
+        /// </summary>
         public bool ConvertToEnglish { get; set; }
 
+        /// <summary>
+        /// Minimal age in years.
+        /// </summary>
         public int MinAge 
         { 
             get
@@ -146,6 +159,9 @@
             }
         }
 
+        /// <summary>
+        /// Maximal age in years.
+        /// </summary>
         public int MaxAge
         {
             get
@@ -165,8 +181,16 @@
             }
         }
 
+        /// <summary>
+        /// Ensure uniqueness of Phone number and EGN in the generated list.
+        /// </summary>
         public bool Unique { get; set; }
 
+        /// <summary>
+        /// Generates a List of random people.
+        /// </summary>
+        /// <param name="numberOfPeople">Number of people to generate.</param>
+        /// <returns>A List of BgPerson-s.</returns>
         public List<BgPerson> GenerateRandomPeople(int numberOfPeople)
         {
             var returnList = new List<BgPerson>(numberOfPeople);
@@ -208,6 +232,10 @@
             return returnList;
         }
 
+        /// <summary>
+        /// Generates single random BgPerson.
+        /// </summary>
+        /// <returns>A random BgPerson.</returns>
         public BgPerson GetRandomPerson()
         {
             int gender = this.ran.Next(1, 3);
